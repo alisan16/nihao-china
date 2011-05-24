@@ -1,13 +1,16 @@
 	import java.applet.Applet;
 	import java.applet.AudioClip;
 	import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 	import java.util.*;
 import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 
 
-public class NihaoChina extends Applet implements Runnable {
+public class NihaoChina extends Applet implements MouseMotionListener, MouseListener, Runnable {
 	
 	Thread runner;
 	AudioClip sound;
@@ -66,7 +69,7 @@ public class NihaoChina extends Applet implements Runnable {
 			add(d);
 		*/
 		
-		AudioClip nihao;
+		AudioClip nihao = null;
 		try {
 			nihao = getAudioClip(new URL(getCodeBase(), "1nihao.wav"));
 		} catch (MalformedURLException e) {
@@ -74,7 +77,7 @@ public class NihaoChina extends Applet implements Runnable {
 			e.printStackTrace();
 		}
 		Tile test = new Tile("Hello", "Ni Hao", nihao);
-		add(test);
+		makebutton(test.getE(), gridbag, c);
 
     	  
 		
@@ -111,6 +114,48 @@ public class NihaoChina extends Applet implements Runnable {
 				e.printStackTrace();
 			}
 		}
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseDragged(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseMoved(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	
