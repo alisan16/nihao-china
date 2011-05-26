@@ -15,7 +15,6 @@ import java.net.URL;
 public class NihaoChina extends Applet implements MouseMotionListener, MouseListener, Runnable {
 	
 	Thread runner;
-	AudioClip sound;
 	int frame;
 	ArrayList<Tile> greetings;
 	ArrayList<Tile> dining;
@@ -24,68 +23,64 @@ public class NihaoChina extends Applet implements MouseMotionListener, MouseList
 	/* Called once when the applet is loaded.
 	 */
 	public void init() {
-        GridBagLayout gridbag = new GridBagLayout();
-        GridBagConstraints c = new GridBagConstraints();
-        setSize(300, 500);
+		setLayout(new BorderLayout());
+        setSize(800, 800);
 		setBackground(Color.RED);
-
-        setFont(new Font("Helvetica", Font.PLAIN, 14));
-        setLayout(gridbag);
-        c.fill = GridBagConstraints.BOTH;
-		c.weightx = 1.0;
-        makebutton("Greetings", gridbag, c);
-        c.gridwidth = GridBagConstraints.RELATIVE; 
-        makebutton("Dining", gridbag, c);
-        c.gridwidth = GridBagConstraints.REMAINDER; 
-        makebutton("Shopping", gridbag, c);
-        c.weightx = 0.0;                   //reset to the default
-        makebutton("Button5", gridbag, c); //another row
-
-		// Create array list of categories
-		Button a = new Button("Greetings");
-		Button b = new Button("Dining");
-		Button d = new Button("Shopping");
-		ArrayList<Button> buttons = new ArrayList<Button>();
-		buttons.add(a);
-		buttons.add(b);
-		buttons.add(d);
-		//creates ArrayList of string name of categories
 		
-		ArrayList<Tile> greetings = new ArrayList<Tile>();
-		ArrayList<Tile> dining = new ArrayList<Tile>();
-		ArrayList<Tile> shopping = new ArrayList<Tile>();
-		
-        try {
-			Scanner fileScan = new Scanner(new File("shopping.txt"));
-			while (fileScan.hasNext()) {
-				shopping.add(new Tile(fileScan.nextLine(), fileScan.nextLine(), null));
-			}
-		} catch (FileNotFoundException e) {
+		//placeholder for logo
+		Tile welcome = new Tile(null, null, null);
+		try {
+			welcome = new Tile("Welcome", "Huan ying", getAudioClip(new URL(getCodeBase(), ("src.audio.msc/WELCOME.wav"))));
+		} catch (MalformedURLException e1) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			e1.printStackTrace();
 		}
+		add(welcome, BorderLayout.NORTH);
+
 		
+		FlowLayout flow = new FlowLayout();
+		Panel phrases = new Panel(flow);
+		flow.setHgap(0);
+		flow.setVgap(0);
+		add(phrases, BorderLayout.CENTER);
+		
+		FlowLayout flow2 = new FlowLayout();
+		Panel categories = new Panel(flow2);
+		add(categories, BorderLayout.SOUTH);
+		
+        categories.add(new Button("Greetings"));
+        categories.add(new Button("Dining"));
+        categories.add(new Button("Shopping"));
+
+		
+		//creates ArrayLists of tiles for each of the categories
+		//ArrayList<Tile> greetings = makeTiles("greetings");
+		//ArrayList<Tile> dining = makeTiles("dining");
+		ArrayList<Tile> shopping = makeTiles("shopping");
+
+		
+		//adds Tiles to the applet
+		for(final Tile test1 : shopping){
+			phrases.add(test1);
+			test1.addActionListener(new ActionListener() {
+				@Override
+				//makes audioClip play when tile is clicked
+				public void actionPerformed(ActionEvent arg0) {
+					test1.getA().play();
+					System.out.println("hello");
+				}
+			});
+		}
+
+		//for debugging
 		/*for(Tile testt : shopping){
 			System.out.println(testt.getE());
 			System.out.println(testt.getC());
 			System.out.println();
 		}*/
-		
-		// define what happens when the button is clicked
-		/*for(Button button : buttons)
-			button.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent arg0) {
-				}	
-			});*/
-			/*add(a);
-			add(b);
-			add(d);
-		*/
         
-
-
-		
+		//for testing out one Tile
+		/*
 		AudioClip nihao = null;
 		try {
 			nihao = getAudioClip(new URL(getCodeBase(), "1nihao.wav"));
@@ -102,7 +97,7 @@ public class NihaoChina extends Applet implements MouseMotionListener, MouseList
 				System.out.println("hello");
 			}
 			
-		});
+		});*/
     	  
 		
 		// Start animation
@@ -113,16 +108,30 @@ public class NihaoChina extends Applet implements MouseMotionListener, MouseList
 		addMouseListener(this);
 	}
 	
-	protected void makeTile(Tile t, GridBagLayout gridbag, GridBagConstraints c) {
-		gridbag.setConstraints(t, c);
-		add(t);
-	}
+
 	
-    protected void makebutton(String name, GridBagLayout gridbag, GridBagConstraints c) {
-    	Button button = new Button(name);
-    	gridbag.setConstraints(button, c);
-    	add(button);
-    }
+	public ArrayList<Tile> makeTiles(String name){
+		//make ArrayList of Tiles for shopping phrases 
+		ArrayList<Tile> list = new ArrayList<Tile>();
+		try {
+			Scanner fileScan = new Scanner(new File(name + ".txt"));
+			for(int phrase = 1; phrase <= 7; phrase++){
+				AudioClip temp = null;
+				int num = phrase;
+				try {
+					temp = getAudioClip(new URL(getCodeBase(), (name + "/" + num + ".wav")));
+				} catch (MalformedURLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				list.add(new Tile(fileScan.nextLine(), fileScan.nextLine(), temp));
+			}
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return list;
+	}
 	
 	/* Paint is called after init has completed and then whenever repaint() is called
 	 * When called through repaint(), the screen is first cleared
