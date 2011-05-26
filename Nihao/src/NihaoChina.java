@@ -17,8 +17,9 @@ public class NihaoChina extends Applet implements MouseMotionListener, MouseList
 	Thread runner;
 	AudioClip sound;
 	int frame;
-	ArrayList<Tile> phrases;
-
+	ArrayList<Tile> greetings;
+	ArrayList<Tile> dining;
+	ArrayList<Tile> shopping;
 
 	/* Called once when the applet is loaded.
 	 */
@@ -40,18 +41,6 @@ public class NihaoChina extends Applet implements MouseMotionListener, MouseList
         c.weightx = 0.0;                   //reset to the default
         makebutton("Button5", gridbag, c); //another row
 
-        /*try {
-			Scanner s = new Scanner(new File("shopping.txt"));
-			while(s.hasNextLine()){
-				c.gridwidth = GridBagConstraints.REMAINDER; 
-				makebutton("Hello", gridbag, c);
-				s.nextLine();
-			}
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
-		
 		// Create array list of categories
 		Button a = new Button("Greetings");
 		Button b = new Button("Dining");
@@ -60,6 +49,28 @@ public class NihaoChina extends Applet implements MouseMotionListener, MouseList
 		buttons.add(a);
 		buttons.add(b);
 		buttons.add(d);
+		//creates ArrayList of string name of categories
+		
+		ArrayList<Tile> greetings = new ArrayList<Tile>();
+		ArrayList<Tile> dining = new ArrayList<Tile>();
+		ArrayList<Tile> shopping = new ArrayList<Tile>();
+		
+        try {
+			Scanner fileScan = new Scanner(new File("shopping.txt"));
+			while (fileScan.hasNext()) {
+				shopping.add(new Tile(fileScan.nextLine(), fileScan.nextLine(), null));
+			}
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		/*for(Tile testt : shopping){
+			System.out.println(testt.getE());
+			System.out.println(testt.getC());
+			System.out.println();
+		}*/
+		
 		// define what happens when the button is clicked
 		/*for(Button button : buttons)
 			button.addActionListener(new ActionListener() {
@@ -71,6 +82,9 @@ public class NihaoChina extends Applet implements MouseMotionListener, MouseList
 			add(b);
 			add(d);
 		*/
+        
+
+
 		
 		AudioClip nihao = null;
 		try {
@@ -80,7 +94,7 @@ public class NihaoChina extends Applet implements MouseMotionListener, MouseList
 			e.printStackTrace();
 		}
 		final Tile test = new Tile("Hello", "Ni Hao", nihao);
-		makebutton(test.getE(), gridbag, c);
+		makeTile(test, gridbag, c);
 		test.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -97,6 +111,11 @@ public class NihaoChina extends Applet implements MouseMotionListener, MouseList
 		// Respond to mouse actions
 		addMouseMotionListener(this);
 		addMouseListener(this);
+	}
+	
+	protected void makeTile(Tile t, GridBagLayout gridbag, GridBagConstraints c) {
+		gridbag.setConstraints(t, c);
+		add(t);
 	}
 	
     protected void makebutton(String name, GridBagLayout gridbag, GridBagConstraints c) {

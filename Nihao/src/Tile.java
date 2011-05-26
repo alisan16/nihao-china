@@ -14,6 +14,7 @@ public class Tile extends Button{
 		this.eWord = eWord;
 		this.cWord = cWord;
 		this.aFile = aFile;
+		setLabel(eWord);
 	}
 	
 	public String getE(){
