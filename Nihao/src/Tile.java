@@ -25,7 +25,7 @@ public class Tile extends Button{
 		return cWord;
 	}
 	
-	public AudioClip getA(){
+	public AudioClip getAudio(){
 		return aFile;
 	}
 }
