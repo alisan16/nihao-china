@@ -12,6 +12,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 
+
 public class NihaoChina extends Applet implements MouseMotionListener, MouseListener, Runnable {
 	
 	Thread runner;
@@ -52,12 +53,12 @@ public class NihaoChina extends Applet implements MouseMotionListener, MouseList
 
 		
 		//creates ArrayLists of tiles for each of the categories
-		//ArrayList<Tile> greetings = makeTiles("greetings");
+		ArrayList<Tile> greetings = makeTiles("greetings");
 		//ArrayList<Tile> dining = makeTiles("dining");
-		ArrayList<Tile> shopping = makeTiles("shopping");
+		//ArrayList<Tile> shopping = makeTiles("shopping");
 
-		newScreen(phrases, shopping);
-
+		newScreen(phrases,  greetings);
+ 
 		//for debugging
 		/*for(Tile testt : shopping){
 			System.out.println(testt.getE());
@@ -159,9 +160,14 @@ public class NihaoChina extends Applet implements MouseMotionListener, MouseList
 	}
 
 	@Override
-	public void mouseClicked(MouseEvent arg0) {
+	public boolean mouseClicked(MouseEvent arg0) {
 		// TODO Auto-generated method stub
-		
+		if (mousePressed(arg0) && mouseReleased(arg0)==true){
+			return true;
+		}
+		else{
+			return false;
+		}
 	}
 
 	@Override
