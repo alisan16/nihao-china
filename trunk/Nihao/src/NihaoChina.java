@@ -115,11 +115,12 @@ public class NihaoChina extends Applet implements MouseMotionListener, MouseList
 		ArrayList<Tile> list = new ArrayList<Tile>();
 		try {
 			Scanner fileScan = new Scanner(new File(name + ".txt"));
-			for(int phrase = 1; phrase <= 7; phrase++){
+			int num = 1;
+			while(fileScan.hasNext()){
 				AudioClip temp = null;
-				int num = phrase;
 				try {
 					temp = getAudioClip(new URL(getCodeBase(), (name + "/" + num + ".wav")));
+					num++;
 				} catch (MalformedURLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
