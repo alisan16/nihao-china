@@ -30,7 +30,7 @@ public class NihaoChina extends Applet implements MouseMotionListener, MouseList
 		//placeholder for logo
 		Tile welcome = new Tile(null, null, null);
 		try {
-			welcome = new Tile("Welcome", "Huan ying", getAudioClip(new URL(getCodeBase(), ("src.audio.msc/WELCOME.wav"))));
+			welcome = new Tile("Welcome", "Huan ying", getAudioClip(new URL(getCodeBase(), ("/WELCOME.wav"))));
 		} catch (MalformedURLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -67,7 +67,7 @@ public class NihaoChina extends Applet implements MouseMotionListener, MouseList
 				//makes audioClip play when tile is clicked
 				public void actionPerformed(ActionEvent arg0) {
 					test1.getA().play();
-					System.out.println("hello");
+					//System.out.println("hello");
 				}
 			});
 		}
