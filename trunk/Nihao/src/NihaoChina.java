@@ -30,14 +30,12 @@ public class NihaoChina extends Applet implements MouseMotionListener, MouseList
 		//placeholder for logo
 		Tile welcome = new Tile(null, null, null);
 		try {
-			welcome = new Tile("Welcome", "Huan ying", getAudioClip(new URL(getCodeBase(), ("/WELCOME.wav"))));
+			welcome = new Tile("Welcome", "Huan ying", getAudioClip(new URL(getCodeBase(), ("WELCOME.wav"))));
 		} catch (MalformedURLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		add(welcome, BorderLayout.NORTH);
-
-		
 		FlowLayout flow = new FlowLayout();
 		Panel phrases = new Panel(flow);
 		flow.setHgap(0);
@@ -58,19 +56,7 @@ public class NihaoChina extends Applet implements MouseMotionListener, MouseList
 		//ArrayList<Tile> dining = makeTiles("dining");
 		ArrayList<Tile> shopping = makeTiles("shopping");
 
-		
-		//adds Tiles to the applet
-		for(final Tile test1 : shopping){
-			phrases.add(test1);
-			test1.addActionListener(new ActionListener() {
-				@Override
-				//makes audioClip play when tile is clicked
-				public void actionPerformed(ActionEvent arg0) {
-					test1.getA().play();
-					//System.out.println("hello");
-				}
-			});
-		}
+		newScreen(phrases, shopping);
 
 		//for debugging
 		/*for(Tile testt : shopping){
@@ -98,8 +84,7 @@ public class NihaoChina extends Applet implements MouseMotionListener, MouseList
 			}
 			
 		});*/
-    	  
-		
+    	
 		// Start animation
 		runner = new Thread(this);
 		runner.start();
@@ -108,7 +93,22 @@ public class NihaoChina extends Applet implements MouseMotionListener, MouseList
 		addMouseListener(this);
 	}
 	
-
+	public Panel newScreen(Panel p, ArrayList<Tile> list){
+		Panel pane = p;
+		//adds Tiles to the applet
+		for(final Tile t : list){
+			p.add(t);
+			t.addActionListener(new ActionListener() {
+				@Override
+				//makes audioClip play when tile is clicked
+				public void actionPerformed(ActionEvent arg0) {
+					t.getAudio().play();
+					//System.out.println("hello");
+				}
+			});
+		}
+		return pane;
+	}
 	
 	public ArrayList<Tile> makeTiles(String name){
 		//make ArrayList of Tiles for shopping phrases 
