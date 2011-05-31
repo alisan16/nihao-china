@@ -12,11 +12,9 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 
-
 public class NihaoChina extends Applet implements MouseMotionListener, MouseListener, Runnable {
 	
 	Thread runner;
-	int frame;
 	ArrayList<Tile> greetings;
 	ArrayList<Tile> dining;
 	ArrayList<Tile> shopping;
@@ -31,34 +29,62 @@ public class NihaoChina extends Applet implements MouseMotionListener, MouseList
 		//placeholder for logo
 		Tile welcome = new Tile(null, null, null);
 		try {
-			welcome = new Tile("Welcome", "Huan ying", getAudioClip(new URL(getCodeBase(), ("WELCOME.wav"))));
+			welcome = new Tile("Welcome", "Huan ying", getAudioClip(new URL(getCodeBase(), ("welcome.wav"))));
 		} catch (MalformedURLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		add(welcome, BorderLayout.NORTH);
 		FlowLayout flow = new FlowLayout();
-		Panel phrases = new Panel(flow);
+		final Panel phrases = new Panel(flow);
 		flow.setHgap(0);
 		flow.setVgap(0);
-		add(phrases, BorderLayout.CENTER);
-		
+	
 		FlowLayout flow2 = new FlowLayout();
 		Panel categories = new Panel(flow2);
 		add(categories, BorderLayout.SOUTH);
 		
-        categories.add(new Button("Greetings"));
-        categories.add(new Button("Dining"));
-        categories.add(new Button("Shopping"));
-
-		
 		//creates ArrayLists of tiles for each of the categories
-		ArrayList<Tile> greetings = makeTiles("greetings");
-		//ArrayList<Tile> dining = makeTiles("dining");
-		//ArrayList<Tile> shopping = makeTiles("shopping");
+		final ArrayList<Tile> greetings = makeTiles("greetings");
+		final ArrayList<Tile> dining = makeTiles("dining");
+		final ArrayList<Tile> shopping = makeTiles("shopping");
+		Button g = new Button("Greetings");
+        categories.add(g);
+        g.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				add(newScreen(phrases, greetings), BorderLayout.CENTER);
+				for(Tile test : greetings){
+					System.out.println(test.getE());
+				}
+			}
+		});
+        
+		Button d = new Button("Dining");
+        categories.add(d);
+        d.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				add(newScreen(phrases, dining), BorderLayout.CENTER);
+				for(Tile test1 : dining){
+					System.out.println(test1.getE());
+				}
+				
+			}
+		});
+        
+		Button s = new Button("Shopping");
+        categories.add(s);
+        s.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				add(newScreen(phrases, shopping), BorderLayout.CENTER);
+				for(Tile test2 : greetings){
+					System.out.println(test2.getE());
+				}
+			}
+		});
 
-		newScreen(phrases,  greetings);
- 
 		//for debugging
 		/*for(Tile testt : shopping){
 			System.out.println(testt.getE());
@@ -70,7 +96,7 @@ public class NihaoChina extends Applet implements MouseMotionListener, MouseList
 		/*
 		AudioClip nihao = null;
 		try {
-			nihao = getAudioClip(new URL(getCodeBase(), "1nihao.wav"));
+			nihao = getAudio`Clip(new URL(getCodeBase(), "1nihao.wav"));
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -148,10 +174,8 @@ public class NihaoChina extends Applet implements MouseMotionListener, MouseList
 	@Override
 	public void run() {
 		while(true) {
-			frame++;
-			repaint();
 			try {
-				Thread.sleep(1000); // pause between frames
+				Thread.sleep(100); // pause between frames
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -160,14 +184,9 @@ public class NihaoChina extends Applet implements MouseMotionListener, MouseList
 	}
 
 	@Override
-	public boolean mouseClicked(MouseEvent arg0) {
+	public void mouseClicked(MouseEvent arg0) {
 		// TODO Auto-generated method stub
-		if (mousePressed(arg0) && mouseReleased(arg0)==true){
-			return true;
-		}
-		else{
-			return false;
-		}
+		
 	}
 
 	@Override
@@ -206,7 +225,5 @@ public class NihaoChina extends Applet implements MouseMotionListener, MouseList
 		
 	}
 
-	
-	
 	
 }
