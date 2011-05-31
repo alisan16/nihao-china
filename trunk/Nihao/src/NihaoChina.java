@@ -20,6 +20,7 @@ public class NihaoChina extends Applet implements MouseMotionListener, MouseList
 	ArrayList<Tile> shopping;
 
 	/* Called once when the applet is loaded.
+	 TEST EDIT
 	 */
 	public void init() {
 		final LayoutManager borderLayout = new BorderLayout();
