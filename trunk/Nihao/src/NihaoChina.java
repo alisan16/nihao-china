@@ -22,7 +22,8 @@ public class NihaoChina extends Applet implements MouseMotionListener, MouseList
 	/* Called once when the applet is loaded.
 	 */
 	public void init() {
-		setLayout(new BorderLayout());
+		final LayoutManager borderLayout = new BorderLayout();
+		setLayout(borderLayout);
         setSize(800, 800);
 		setBackground(Color.RED);
 		
@@ -65,6 +66,7 @@ public class NihaoChina extends Applet implements MouseMotionListener, MouseList
         d.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				borderLayout.removeLayoutComponent(phrases);
 				add(newScreen(phrases, dining), BorderLayout.CENTER);
 				for(Tile test1 : dining){
 					System.out.println(test1.getE());
