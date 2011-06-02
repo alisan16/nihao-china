@@ -49,7 +49,6 @@ public class NihaoChina extends Applet implements MouseMotionListener, MouseList
 		FlowLayout flow2 = new FlowLayout();
 		Panel categories = new Panel(flow2);
 		add(categories, BorderLayout.SOUTH);
-		
 		//creates ArrayLists of tiles for each of the categories
 		final ArrayList<Tile> greetings = makeTiles("greetings");
 		final ArrayList<Tile> dining = makeTiles("dining");
@@ -62,6 +61,8 @@ public class NihaoChina extends Applet implements MouseMotionListener, MouseList
 				remove(dines);
 				remove(shops);
 				add(newScreen(greets, greetings), BorderLayout.CENTER);
+				greets.repaint();
+				
 				/*for(Tile test : greetings){
 					System.out.println(test.getE());
 				}*/
