@@ -23,7 +23,7 @@ public class NihaoChina extends Applet implements MouseMotionListener, MouseList
 	Panel dines;
 
 	/* Called once when the applet is loaded.
-	 TEST
+	 TEST AGAIN
 	 */
 	public void init() {
 	    setSize(300, 300);
