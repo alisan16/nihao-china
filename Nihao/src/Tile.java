@@ -17,6 +17,14 @@ public class Tile extends Button{
 		setLabel(eWord);
 	}
 	
+	public void switchLabel(){
+		if(getLabel() == eWord){
+			setLabel(cWord);
+		} else if(getLabel() == cWord){
+			setLabel(eWord);
+		}
+	}
+	
 	public String getE(){
 		return eWord;
 	}

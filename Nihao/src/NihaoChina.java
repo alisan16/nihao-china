@@ -18,30 +18,33 @@ public class NihaoChina extends Applet implements MouseMotionListener, MouseList
 	ArrayList<Tile> greetings;
 	ArrayList<Tile> dining;
 	ArrayList<Tile> shopping;
+	Panel greets;
+	Panel shops;
+	Panel dines;
 
 	/* Called once when the applet is loaded.
-	 TEST EDIT
 	 */
 	public void init() {
-		final LayoutManager borderLayout = new BorderLayout();
+	    setSize(300, 300);
+		BorderLayout borderLayout = new BorderLayout();
 		setLayout(borderLayout);
-        setSize(800, 800);
 		setBackground(Color.RED);
-		
+		borderLayout.setVgap(10);
 		//placeholder for logo
 		Tile welcome = new Tile(null, null, null);
 		try {
 			welcome = new Tile("Welcome", "Huan ying", getAudioClip(new URL(getCodeBase(), ("welcome.wav"))));
-		} catch (MalformedURLException e1) {
+		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			e.printStackTrace();
 		}
+		
 		add(welcome, BorderLayout.NORTH);
-		FlowLayout flow = new FlowLayout();
-		final Panel phrases = new Panel(flow);
-		flow.setHgap(0);
-		flow.setVgap(0);
-	
+		GridLayout grid = new GridLayout(0,1);
+		greets = new Panel(grid);
+		shops = new Panel(grid);
+		dines = new Panel(grid);
+		
 		FlowLayout flow2 = new FlowLayout();
 		Panel categories = new Panel(flow2);
 		add(categories, BorderLayout.SOUTH);
@@ -55,10 +58,12 @@ public class NihaoChina extends Applet implements MouseMotionListener, MouseList
         g.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				add(newScreen(phrases, greetings), BorderLayout.CENTER);
-				for(Tile test : greetings){
+				remove(dines);
+				remove(shops);
+				add(newScreen(greets, greetings), BorderLayout.CENTER);
+				/*for(Tile test : greetings){
 					System.out.println(test.getE());
-				}
+				}*/
 			}
 		});
         
@@ -67,12 +72,12 @@ public class NihaoChina extends Applet implements MouseMotionListener, MouseList
         d.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				borderLayout.removeLayoutComponent(phrases);
-				add(newScreen(phrases, dining), BorderLayout.CENTER);
-				for(Tile test1 : dining){
+				remove(greets);
+				remove(shops);
+				add(newScreen(dines, dining), BorderLayout.CENTER);
+				/*for(Tile test1 : dining){
 					System.out.println(test1.getE());
-				}
-				
+				}	*/
 			}
 		});
         
@@ -81,10 +86,12 @@ public class NihaoChina extends Applet implements MouseMotionListener, MouseList
         s.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				add(newScreen(phrases, shopping), BorderLayout.CENTER);
-				for(Tile test2 : greetings){
+				remove(greets);
+				remove(dines);
+				add(newScreen(shops, shopping), BorderLayout.CENTER);
+				/*for(Tile test2 : greetings){
 					System.out.println(test2.getE());
-				}
+				}*/
 			}
 		});
 
@@ -127,11 +134,12 @@ public class NihaoChina extends Applet implements MouseMotionListener, MouseList
 		Panel pane = p;
 		//adds Tiles to the applet
 		for(final Tile t : list){
-			p.add(t);
+			pane.add(t);
 			t.addActionListener(new ActionListener() {
 				@Override
 				//makes audioClip play when tile is clicked
 				public void actionPerformed(ActionEvent arg0) {
+					t.switchLabel();
 					t.getAudio().play();
 					//System.out.println("hello");
 				}
