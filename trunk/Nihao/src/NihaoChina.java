@@ -18,12 +18,13 @@ public class NihaoChina extends Applet implements MouseMotionListener, MouseList
 	ArrayList<Tile> greetings;
 	ArrayList<Tile> dining;
 	ArrayList<Tile> shopping;
-	Panel greets;
-	Panel shops;
-	Panel dines;
+	private Panel greets;
+	private Panel shops;
+	private Panel dines;
+	private AudioClip welA;
+	private Tile welcome;
 
 	/* Called once when the applet is loaded.
-	 TEST AGAIN
 	 */
 	public void init() {
 	    setSize(300, 300);
@@ -31,14 +32,24 @@ public class NihaoChina extends Applet implements MouseMotionListener, MouseList
 		setLayout(borderLayout);
 		setBackground(Color.RED);
 		borderLayout.setVgap(10);
+		
 		//placeholder for logo
-		Tile welcome = new Tile(null, null, null);
 		try {
-			welcome = new Tile("Welcome", "Huan ying", getAudioClip(new URL(getCodeBase(), ("welcome.wav"))));
+			welA = getAudioClip(new URL(getCodeBase(), ("welcome.wav")));
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		welcome = new Tile("Welcome", "Huan ying", welA);
+		welcome.addActionListener(new ActionListener() {
+			@Override
+			//makes audioClip play when tile is clicked
+			public void actionPerformed(ActionEvent arg0) {
+				welcome.switchLabel();
+				welcome.getAudio().play();
+				//System.out.println("hello");
+			}
+		});
 		
 		add(welcome, BorderLayout.NORTH);
 		GridLayout grid = new GridLayout(0,1);
@@ -49,10 +60,12 @@ public class NihaoChina extends Applet implements MouseMotionListener, MouseList
 		FlowLayout flow2 = new FlowLayout();
 		Panel categories = new Panel(flow2);
 		add(categories, BorderLayout.SOUTH);
-		//creates ArrayLists of tiles for each of the categories
-		final ArrayList<Tile> greetings = makeTiles("greetings");
-		final ArrayList<Tile> dining = makeTiles("dining");
-		final ArrayList<Tile> shopping = makeTiles("shopping");
+		
+		//initializes ArrayLists of tiles for each of the categories
+		greetings = makeTiles("greetings");
+		dining = makeTiles("dining");
+		shopping = makeTiles("shopping");
+		
 		Button g = new Button("Greetings");
         categories.add(g);
         g.addActionListener(new ActionListener() {
@@ -61,14 +74,10 @@ public class NihaoChina extends Applet implements MouseMotionListener, MouseList
 				remove(dines);
 				remove(shops);
 				add(newScreen(greets, greetings), BorderLayout.CENTER);
-				greets.repaint();
-				
-				/*for(Tile test : greetings){
-					System.out.println(test.getE());
-				}*/
 			}
 		});
         
+
 		Button d = new Button("Dining");
         categories.add(d);
         d.addActionListener(new ActionListener() {
@@ -103,7 +112,6 @@ public class NihaoChina extends Applet implements MouseMotionListener, MouseList
 			System.out.println(testt.getC());
 			System.out.println();
 		}*/
-        
 		//for testing out one Tile
 		/*
 		AudioClip nihao = null;
@@ -121,7 +129,6 @@ public class NihaoChina extends Applet implements MouseMotionListener, MouseList
 				test.getA().play();
 				System.out.println("hello");
 			}
-			
 		});*/
     	
 		// Start animation
@@ -141,6 +148,7 @@ public class NihaoChina extends Applet implements MouseMotionListener, MouseList
 				@Override
 				//makes audioClip play when tile is clicked
 				public void actionPerformed(ActionEvent arg0) {
+					//NOTE: only works every other time you click one of the categories
 					t.switchLabel();
 					t.getAudio().play();
 					//System.out.println("hello");
