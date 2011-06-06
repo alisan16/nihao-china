@@ -25,6 +25,10 @@ public class Tile extends Button{
 		}
 	}
 	
+	public void reset(){
+		setLabel(eWord);
+	}
+	
 	public String getE(){
 		return eWord;
 	}
