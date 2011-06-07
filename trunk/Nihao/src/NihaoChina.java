@@ -3,16 +3,13 @@
 	import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
 	import java.util.*;
 import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 
 
-public class NihaoChina extends Applet implements MouseMotionListener, MouseListener, Runnable {
+public class NihaoChina extends Applet implements Runnable {
 	
 	Thread runner;
 	ArrayList<Tile> greetings;
@@ -28,12 +25,15 @@ public class NihaoChina extends Applet implements MouseMotionListener, MouseList
 	 */
 	public void init() {
 	    setSize(300, 300);
-		BorderLayout borderLayout = new BorderLayout();
+		
+	    //Makes BorderLayout for the applet
+	    BorderLayout borderLayout = new BorderLayout();
 		setLayout(borderLayout);
 		setBackground(Color.RED);
 		borderLayout.setVgap(10);
 		
 		//placeholder for logo
+		//adds logo to area labeled NORTH
 		try {
 			welA = getAudioClip(new URL(getCodeBase(), ("welcome.wav")));
 		} catch (MalformedURLException e) {
@@ -50,13 +50,16 @@ public class NihaoChina extends Applet implements MouseMotionListener, MouseList
 				//System.out.println("hello");
 			}
 		});
-		
 		add(welcome, BorderLayout.NORTH);
+		
+		//Makes three different panels that contain GridLayouts for each of the phrase categories
 		GridLayout grid = new GridLayout(0,1);
 		greets = new Panel(grid);
 		shops = new Panel(grid);
 		dines = new Panel(grid);
 		
+		//Makes a panel of one flow layout with the buttons corresponding to each phrase category
+		//Adds the categories panel to the area labeled SOUTH
 		FlowLayout flow2 = new FlowLayout();
 		Panel categories = new Panel(flow2);
 		add(categories, BorderLayout.SOUTH);
@@ -66,6 +69,7 @@ public class NihaoChina extends Applet implements MouseMotionListener, MouseList
 		dining = makeTiles("dining");
 		shopping = makeTiles("shopping");
 		
+		//
 		Button g = new Button("Greetings");
         categories.add(g);
         g.addActionListener(new ActionListener() {
@@ -77,7 +81,6 @@ public class NihaoChina extends Applet implements MouseMotionListener, MouseList
 			}
 		});
         
-
 		Button d = new Button("Dining");
         categories.add(d);
         d.addActionListener(new ActionListener() {
@@ -130,13 +133,9 @@ public class NihaoChina extends Applet implements MouseMotionListener, MouseList
 				System.out.println("hello");
 			}
 		});*/
-    	
 		// Start animation
 		runner = new Thread(this);
 		runner.start();
-		// Respond to mouse actions
-		addMouseMotionListener(this);
-		addMouseListener(this);
 	}
 	
 	public Panel newScreen(Panel p, ArrayList<Tile> list){
@@ -203,48 +202,4 @@ public class NihaoChina extends Applet implements MouseMotionListener, MouseList
 			}
 		}
 	}
-
-	@Override
-	public void mouseClicked(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseExited(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mousePressed(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseDragged(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseMoved(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	
 }
