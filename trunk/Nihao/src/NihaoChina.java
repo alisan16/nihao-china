@@ -1,16 +1,26 @@
-	import java.applet.Applet;
-	import java.applet.AudioClip;
-	import java.awt.*;
+import java.applet.Applet;
+import java.applet.AudioClip;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-	import java.util.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.FlowLayout;
+import java.awt.Graphics;
+import java.awt.GridLayout;
+import java.awt.Panel;
+import java.awt.image.BufferedImage;
+import java.awt.*;
+import java.util.*;
 import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import javax.imageio.ImageIO;
+
 
 public class NihaoChina extends Applet implements Runnable {
 	
+	BufferedImage logo;
 	Thread runner;
 	ArrayList<Tile> greetings;
 	ArrayList<Tile> dining;
@@ -24,13 +34,13 @@ public class NihaoChina extends Applet implements Runnable {
 	/* Called once when the applet is loaded.
 	 */
 	public void init() {
-	    setSize(300, 300);
+	    setSize(300, 500);
 		
 	    //Makes BorderLayout for the applet
 	    BorderLayout borderLayout = new BorderLayout();
 		setLayout(borderLayout);
 		setBackground(Color.RED);
-		borderLayout.setVgap(10);
+		borderLayout.setVgap(110);
 		
 		//placeholder for logo
 		//adds logo to area labeled NORTH
@@ -50,7 +60,22 @@ public class NihaoChina extends Applet implements Runnable {
 				//System.out.println("hello");
 			}
 		});
-		add(welcome, BorderLayout.NORTH);
+		
+		add(welcome, borderLayout.NORTH);
+		
+		try {
+			logo = ImageIO.read(new File("logo.bmp"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+
+		
+		/*DrawingPanel p = new DrawingPanel (600, 600);
+		Color lightBlue = new Color(175, 238, 238);
+		p.setBackground(lightBlue);
+		Graphics graph = p.getGraphics();
+		paint(graph);*/
 		
 		//Makes three different panels that contain GridLayouts for each of the phrase categories
 		GridLayout grid = new GridLayout(0,1);
@@ -185,7 +210,7 @@ public class NihaoChina extends Applet implements Runnable {
 	 * When called through repaint(), the screen is first cleared
 	 */
 	public void paint(Graphics g) {
-		//g.drawString("Frame: " + frame, 10, 100);
+		g.drawImage(logo, 100, 10, null);
 	}
 	
 	/* Run is completed in parallel to other operations in the class
@@ -194,6 +219,7 @@ public class NihaoChina extends Applet implements Runnable {
 	@Override
 	public void run() {
 		while(true) {
+			repaint();
 			try {
 				Thread.sleep(100); // pause between frames
 			} catch (InterruptedException e) {
